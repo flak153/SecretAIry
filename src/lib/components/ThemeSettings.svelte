@@ -2,7 +2,10 @@
 	import { onMount } from 'svelte';
 	
 	let currentTheme = $state('wintry');
-	let currentStyle = $state('default');
+	let currentStyle = $state('glassmorphic');
+	let useColorAccents = $state(true);
+	let glassIntensity = $state(50); // 0-100 scale
+	let accentIntensity = $state(30); // 0-100 scale for gradient mixing
 	
 	const themes = [
 		// Clean & Modern
@@ -11,55 +14,59 @@
 		{ name: 'seafoam', label: 'Seafoam', colors: ['#10b981', '#064e3b'], style: 'modern' },
 		{ name: 'mint', label: 'Mint', colors: ['#14b8a6', '#042f2e'], style: 'modern' },
 		{ name: 'nouveau', label: 'Nouveau', colors: ['#ef4444', '#1f2937'], style: 'modern' },
+		{ name: 'modern', label: 'Modern', colors: ['#ec4899', '#3b82f6'], style: 'modern' },
 		
 		// Retro & Vintage
 		{ name: 'vintage', label: 'Vintage', colors: ['#f59e0b', '#451a03'], style: 'retro' },
 		{ name: 'sahara', label: 'Sahara', colors: ['#f97316', '#431407'], style: 'retro' },
 		{ name: 'legacy', label: 'Legacy', colors: ['#84cc16', '#1a2e05'], style: 'retro' },
+		{ name: 'nosh', label: 'Nosh', colors: ['#dc2626', '#fef3c7'], style: 'retro' },
 		
 		// Bold & Dramatic
 		{ name: 'crimson', label: 'Crimson', colors: ['#dc2626', '#450a0a'], style: 'bold' },
 		{ name: 'rose', label: 'Rose', colors: ['#f43f5e', '#4c0519'], style: 'bold' },
-		{ name: 'cerberus', label: 'Cerberus', colors: ['#f97316', '#18181b'], style: 'bold' },
+		{ name: 'cerberus', label: 'Cerberus', colors: ['#7c3aed', '#dc2626'], style: 'bold' },
 		{ name: 'fennec', label: 'Fennec', colors: ['#eab308', '#422006'], style: 'bold' },
 		
 		// Elegant & Professional
 		{ name: 'hamlindigo', label: 'Hamlindigo', colors: ['#6366f1', '#1e1b4b'], style: 'elegant' },
-		{ name: 'reign', label: 'Reign', colors: ['#a855f7', '#1e1b4b'], style: 'elegant' },
+		{ name: 'reign', label: 'Reign', colors: ['#facc15', '#6b7280'], style: 'elegant' },
 		{ name: 'concord', label: 'Concord', colors: ['#8b5cf6', '#581c87'], style: 'elegant' },
 		
 		// Unique & Creative
 		{ name: 'catppuccin', label: 'Catppuccin', colors: ['#f5c2e7', '#1e1e2e'], style: 'creative' },
 		{ name: 'vox', label: 'Vox', colors: ['#f472b6', '#1f2937'], style: 'creative' },
 		{ name: 'mona', label: 'Mona', colors: ['#06b6d4', '#083344'], style: 'creative' },
+		{ name: 'pine', label: 'Pine', colors: ['#84cc16', '#991b1b'], style: 'creative' },
+		{ name: 'terminus', label: 'Terminus', colors: ['#8b5cf6', '#06b6d4'], style: 'creative' },
 	];
 	
 	const styles = [
-		{ 
-			name: 'default', 
-			label: 'Default',
-			description: 'Clean and simple interface'
-		},
 		{ 
 			name: 'glassmorphic', 
 			label: 'Glassmorphic',
 			description: 'Frosted glass effects with blur and transparency'
 		},
-		{ 
-			name: 'material', 
-			label: 'Material Design',
-			description: 'Google Material Design inspired with shadows and depth'
-		},
-		{ 
-			name: 'brutalist', 
-			label: 'Brutalist',
-			description: 'Bold, harsh lines and strong contrasts'
-		},
-		{ 
-			name: 'neumorphic', 
-			label: 'Neumorphic',
-			description: 'Soft, extruded plastic look with inset shadows'
-		},
+		// { 
+		// 	name: 'default', 
+		// 	label: 'Default',
+		// 	description: 'Clean and simple interface'
+		// },
+		// { 
+		// 	name: 'material', 
+		// 	label: 'Material Design',
+		// 	description: 'Google Material Design inspired with shadows and depth'
+		// },
+		// { 
+		// 	name: 'brutalist', 
+		// 	label: 'Brutalist',
+		// 	description: 'Bold, harsh lines and strong contrasts'
+		// },
+		// { 
+		// 	name: 'neumorphic', 
+		// 	label: 'Neumorphic',
+		// 	description: 'Soft, extruded plastic look with inset shadows'
+		// },
 	];
 	
 	function setTheme(themeName: string) {
@@ -79,11 +86,29 @@
 		document.body.setAttribute('data-style', styleName);
 	}
 	
+	// Remove old color accents function since we're using intensity slider now
+	
+	function setGlassIntensity(value: number) {
+		glassIntensity = value;
+		localStorage.setItem('glassIntensity', value.toString());
+		document.documentElement.style.setProperty('--glass-intensity', value.toString());
+	}
+	
+	function setAccentIntensity(value: number) {
+		accentIntensity = value;
+		localStorage.setItem('accentIntensity', value.toString());
+		document.documentElement.style.setProperty('--accent-intensity', value.toString());
+	}
+
 	onMount(() => {
 		const savedTheme = localStorage.getItem('theme') || 'wintry';
-		const savedStyle = localStorage.getItem('style') || 'default';
+		const savedStyle = localStorage.getItem('style') || 'glassmorphic';
+		const savedIntensity = parseInt(localStorage.getItem('glassIntensity') || '50');
+		const savedAccentIntensity = parseInt(localStorage.getItem('accentIntensity') || '30');
 		setTheme(savedTheme);
 		setStyle(savedStyle);
+		setGlassIntensity(savedIntensity);
+		setAccentIntensity(savedAccentIntensity);
 	});
 </script>
 
@@ -91,16 +116,74 @@
 	<!-- Style Selection -->
 	<div>
 		<h3 class="text-lg font-semibold mb-4">Interface Style</h3>
-		<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+		<div class="flex items-start gap-4">
+			<!-- Glassmorphic Style Button -->
 			{#each styles as style}
 				<button
-					class="text-left p-4 rounded-container-token border-2 transition-all {currentStyle === style.name ? 'border-primary-500 bg-surface-200-800' : 'border-surface-300-700 hover:border-surface-400-600'}"
+					class="flex-1 text-left p-4 rounded-container-token border-2 transition-all {currentStyle === style.name ? 'border-primary-500 bg-surface-200-800' : 'border-surface-300-700 hover:border-surface-400-600'}"
 					onclick={() => setStyle(style.name)}
 				>
 					<h4 class="font-medium mb-1">{style.label}</h4>
 					<p class="text-sm opacity-75">{style.description}</p>
 				</button>
 			{/each}
+			
+			<!-- Glassmorphic Options (only for glassmorphic) -->
+			{#if currentStyle === 'glassmorphic'}
+				<div class="flex-1 space-y-4">
+					<!-- Glass Intensity Slider -->
+					<div class="p-4 rounded-container-token border-2 border-surface-300-700">
+						<div class="space-y-2">
+							<div class="flex items-center justify-between">
+								<h4 class="font-medium">Glass Intensity</h4>
+								<span class="text-sm font-mono bg-surface-200 dark:bg-surface-700 px-2 py-1 rounded">
+									{glassIntensity}%
+								</span>
+							</div>
+							<p class="text-sm opacity-75 mb-3">Control blur and transparency effects</p>
+							<input
+								type="range"
+								min="0"
+								max="100"
+								step="5"
+								bind:value={glassIntensity}
+								oninput={() => setGlassIntensity(glassIntensity)}
+								class="slider w-full"
+							/>
+							<div class="flex justify-between text-xs opacity-50">
+								<span>Subtle</span>
+								<span>Intense</span>
+							</div>
+						</div>
+					</div>
+					
+					<!-- Color Accent Intensity Slider -->
+					<div class="p-4 rounded-container-token border-2 border-surface-300-700">
+						<div class="space-y-2">
+							<div class="flex items-center justify-between">
+								<h4 class="font-medium">Color Accents</h4>
+								<span class="text-sm font-mono bg-surface-200 dark:bg-surface-700 px-2 py-1 rounded">
+									{accentIntensity}%
+								</span>
+							</div>
+							<p class="text-sm opacity-75 mb-3">Mix theme colors into backgrounds</p>
+							<input
+								type="range"
+								min="0"
+								max="100"
+								step="5"
+								bind:value={accentIntensity}
+								oninput={() => setAccentIntensity(accentIntensity)}
+								class="slider w-full"
+							/>
+							<div class="flex justify-between text-xs opacity-50">
+								<span>None</span>
+								<span>Vibrant</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			{/if}
 		</div>
 	</div>
 	
@@ -220,66 +303,6 @@
 						<span class="text-sm">{theme.label}</span>
 					</button>
 				{/each}
-			</div>
-		</div>
-	</div>
-	
-	<!-- Preview -->
-	<div>
-		<h3 class="text-lg font-semibold mb-4">Preview</h3>
-		<div class="card p-6 space-y-4">
-			<!-- Buttons -->
-			<div class="space-y-2">
-				<h4 class="text-sm font-medium opacity-75">Buttons</h4>
-				<div class="flex gap-3 flex-wrap">
-					<button class="btn btn-sm preset-filled-primary-500">Primary</button>
-					<button class="btn btn-sm preset-tonal-primary">Secondary</button>
-					<button class="btn btn-sm preset-outlined-primary-500">Outlined</button>
-				</div>
-			</div>
-			
-			<!-- Cards -->
-			<div class="space-y-2">
-				<h4 class="text-sm font-medium opacity-75">Cards</h4>
-				<div class="card p-4">
-					<p class="text-sm mb-2">This is a nested card component.</p>
-					<p class="text-xs opacity-75">Style: {currentStyle} | Theme: {currentTheme}</p>
-				</div>
-			</div>
-			
-			<!-- Inputs -->
-			<div class="space-y-2">
-				<h4 class="text-sm font-medium opacity-75">Form Elements</h4>
-				<div class="space-y-3">
-					<div class="input-group">
-						<input type="text" placeholder="Text input" class="w-full" />
-						<label class="input-label">Label</label>
-					</div>
-					<div class="flex gap-3 items-center">
-						<div class="switch">
-							<div class="switch-thumb"></div>
-						</div>
-						<span class="text-sm">Toggle switch</span>
-					</div>
-				</div>
-			</div>
-			
-			<!-- Progress -->
-			<div class="space-y-2">
-				<h4 class="text-sm font-medium opacity-75">Progress</h4>
-				<div class="progress-track">
-					<div class="progress-fill" style="width: 60%"></div>
-				</div>
-			</div>
-			
-			<!-- Badge -->
-			<div class="space-y-2">
-				<h4 class="text-sm font-medium opacity-75">Badges</h4>
-				<div class="flex gap-2">
-					<span class="badge">Default</span>
-					<span class="badge bg-primary-500 text-white">Primary</span>
-					<span class="badge bg-success-500 text-white">Success</span>
-				</div>
 			</div>
 		</div>
 	</div>

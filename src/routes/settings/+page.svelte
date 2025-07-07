@@ -1,5 +1,6 @@
 <script lang="ts">
 	import ThemeSettings from '$lib/components/ThemeSettings.svelte';
+	import GoogleCalendarAuth from '$lib/components/GoogleCalendarAuth.svelte';
 </script>
 
 <div class="container mx-auto max-w-4xl p-6">
@@ -7,34 +8,16 @@
 	
 	<div class="space-y-6">
 		<!-- Theme Settings -->
-		<div class="card p-6">
+		<div class="card preset-filled-surface-200-800 p-6">
 			<h2 class="text-lg font-semibold mb-4">Appearance</h2>
 			<ThemeSettings />
 		</div>
 		
 		<!-- Calendar Settings -->
-		<div class="card p-6">
-			<h2 class="text-lg font-semibold mb-4">Calendar Integrations</h2>
-			<div class="space-y-4">
-				<div class="flex items-center justify-between">
-					<div>
-						<p class="font-medium">Google Calendar</p>
-						<p class="text-sm opacity-75">Sync with your Google Calendar</p>
-					</div>
-					<button class="btn btn-sm preset-tonal-primary">Connect</button>
-				</div>
-				<div class="flex items-center justify-between">
-					<div>
-						<p class="font-medium">Outlook Calendar</p>
-						<p class="text-sm opacity-75">Sync with your Outlook Calendar</p>
-					</div>
-					<button class="btn btn-sm preset-tonal-primary">Connect</button>
-				</div>
-			</div>
-		</div>
+		<GoogleCalendarAuth />
 		
 		<!-- AI Assistant Settings -->
-		<div class="card p-6">
+		<div class="card preset-filled-surface-200-800 p-6">
 			<h2 class="text-lg font-semibold mb-4">AI Assistant</h2>
 			<div class="space-y-4">
 				<div class="flex items-center justify-between">

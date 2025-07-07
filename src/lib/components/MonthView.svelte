@@ -1,4 +1,6 @@
 <script lang="ts">
+	import EventPopover from './EventPopover.svelte';
+	
 	interface Props {
 		currentDate: Date;
 		selectedDate: Date;
@@ -7,6 +9,9 @@
 	}
 	
 	let { currentDate, selectedDate, onSelectDate, events }: Props = $props();
+	let hoveredDay = $state(null);
+	let popoverPosition = $state({ x: 0, y: 0 });
+	let hoverTimeout = null;
 	
 	// Get calendar days for month view
 	function getMonthDays(date: Date) {
@@ -39,7 +44,7 @@
 	}
 </script>
 
-<div class="card p-4 h-full flex flex-col">
+<div class="card preset-filled-surface-200-800 p-4 h-full flex flex-col">
 	<h2 class="text-lg font-semibold mb-3">Month Overview</h2>
 	<div class="grid grid-cols-7 gap-1 text-xs flex-1">
 		<!-- Week day headers -->
@@ -68,13 +73,13 @@
 				<div class="absolute bottom-1 left-1 right-1 h-3 bg-surface-300-700 rounded-sm overflow-hidden">
 					<div class="flex h-full">
 						{#if allocation.work > 0}
-							<div class="bg-blue-500" style="width: {workWidth}%"></div>
+							<div class="event-work" style="width: {workWidth}%"></div>
 						{/if}
 						{#if allocation.personal > 0}
-							<div class="bg-green-500" style="width: {personalWidth}%"></div>
+							<div class="event-personal" style="width: {personalWidth}%"></div>
 						{/if}
 						{#if allocation.chores > 0}
-							<div class="bg-orange-500" style="width: {choresWidth}%"></div>
+							<div class="event-chores" style="width: {choresWidth}%"></div>
 						{/if}
 					</div>
 				</div>
@@ -85,15 +90,15 @@
 	<!-- Legend -->
 	<div class="flex gap-4 mt-4 text-xs">
 		<div class="flex items-center gap-1">
-			<div class="w-3 h-3 bg-blue-500 rounded"></div>
+			<div class="w-3 h-3 event-work rounded"></div>
 			<span>Work</span>
 		</div>
 		<div class="flex items-center gap-1">
-			<div class="w-3 h-3 bg-green-500 rounded"></div>
+			<div class="w-3 h-3 event-personal rounded"></div>
 			<span>Personal</span>
 		</div>
 		<div class="flex items-center gap-1">
-			<div class="w-3 h-3 bg-orange-500 rounded"></div>
+			<div class="w-3 h-3 event-chores rounded"></div>
 			<span>Chores</span>
 		</div>
 	</div>
@@ -105,5 +110,31 @@
 	}
 	.h-3 {
 		height: 0.75rem;
+	}
+	
+	/* Event colors that use theme-aware CSS variables */
+	.event-work {
+		background-color: var(--color-primary-500);
+	}
+	
+	.event-personal {
+		background-color: var(--color-secondary-500);
+	}
+	
+	.event-chores {
+		background-color: var(--color-tertiary-500);
+	}
+	
+	/* Glassmorphic style overrides */
+	:global([data-style="glassmorphic"]) .event-work {
+		background-color: var(--event-work-color, var(--color-primary-500));
+	}
+	
+	:global([data-style="glassmorphic"]) .event-personal {
+		background-color: var(--event-personal-color, var(--color-secondary-500));
+	}
+	
+	:global([data-style="glassmorphic"]) .event-chores {
+		background-color: var(--event-chores-color, var(--color-tertiary-500));
 	}
 </style>

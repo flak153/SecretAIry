@@ -7,19 +7,45 @@
 		<script>
 			// Set theme and style immediately to prevent flash
 			const savedTheme = localStorage.getItem('theme') || 'wintry';
-			const savedStyle = localStorage.getItem('style') || 'default';
+			const savedStyle = localStorage.getItem('style') || 'glassmorphic';
+			const savedAccents = localStorage.getItem('colorAccents') !== 'false'; // default true
+			const savedColorScheme = localStorage.getItem('colorScheme') || 'system';
+			const savedIntensity = localStorage.getItem('glassIntensity') || '50';
+			const savedAccentIntensity = localStorage.getItem('accentIntensity') || '30';
+			
+			// Apply theme attributes
 			document.documentElement.setAttribute('data-theme', savedTheme);
 			document.documentElement.setAttribute('data-style', savedStyle);
+			document.documentElement.setAttribute('data-color-accents', savedAccents.toString());
+			document.documentElement.style.setProperty('--glass-intensity', savedIntensity);
+			document.documentElement.style.setProperty('--accent-intensity', savedAccentIntensity);
+			
+			// Apply color scheme (light/dark mode)
+			if (savedColorScheme === 'system') {
+				const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+				if (prefersDark) {
+					document.documentElement.classList.add('dark');
+				}
+			} else if (savedColorScheme === 'dark') {
+				document.documentElement.classList.add('dark');
+			}
+			// For light mode, we don't add any class (it's the default)
 		</script>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">
 		<script>
-			// Also set on body for compatibility
-			const savedTheme = localStorage.getItem('theme') || 'wintry';
-			const savedStyle = localStorage.getItem('style') || 'default';
-			document.body.setAttribute('data-theme', savedTheme);
-			document.body.setAttribute('data-style', savedStyle);
+			// Also set on body for compatibility - reuse variables from head
+			const theme = localStorage.getItem('theme') || 'wintry';
+			const style = localStorage.getItem('style') || 'glassmorphic';
+			const accents = localStorage.getItem('colorAccents') !== 'false';
+			const colorScheme = localStorage.getItem('colorScheme') || 'system';
+			
+			document.body.setAttribute('data-theme', theme);
+			document.body.setAttribute('data-style', style);
+			document.body.setAttribute('data-color-accents', accents.toString());
+			
+			// We don't need to apply dark class to body, only to documentElement
 		</script>
 		<div style="display: contents">%sveltekit.body%</div>
 	</body>

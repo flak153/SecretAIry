@@ -1,0 +1,105 @@
+/* Glassmorphic gradient backgrounds */
+
+/* Apply gradient background to the page background */
+[data-style="glassmorphic"] .min-h-screen {
+  position: relative;
+  background: 
+    /* Light mode gradient */
+    linear-gradient(135deg,
+      color-mix(in oklch, var(--color-primary-400) calc(var(--accent-intensity) * 1%), var(--color-surface-50)) 0%,
+      color-mix(in oklch, var(--color-secondary-400) calc(var(--accent-intensity) * 0.8%), var(--color-surface-50)) 25%,
+      color-mix(in oklch, var(--color-tertiary-400) calc(var(--accent-intensity) * 0.6%), var(--color-surface-50)) 50%,
+      color-mix(in oklch, var(--color-primary-300) calc(var(--accent-intensity) * 0.7%), var(--color-surface-50)) 75%,
+      var(--color-surface-50) 100%
+    ) !important;
+}
+
+/* Dark mode gradient background */
+.dark [data-style="glassmorphic"] .min-h-screen {
+  background: 
+    /* Dark mode gradient */
+    linear-gradient(135deg,
+      color-mix(in oklch, var(--color-primary-700) calc(var(--accent-intensity) * 1.2%), var(--color-surface-950)) 0%,
+      color-mix(in oklch, var(--color-secondary-700) calc(var(--accent-intensity) * 1%), var(--color-surface-950)) 25%,
+      color-mix(in oklch, var(--color-tertiary-700) calc(var(--accent-intensity) * 0.8%), var(--color-surface-950)) 50%,
+      color-mix(in oklch, var(--color-primary-800) calc(var(--accent-intensity) * 0.9%), var(--color-surface-950)) 75%,
+      var(--color-surface-950) 100%
+    ) !important;
+}
+
+/* Apply gradient mixing to cards for the real glassy effect */
+[data-style="glassmorphic"] .card {
+  background: 
+    linear-gradient(135deg,
+      color-mix(in oklch, var(--color-primary-400) calc(var(--accent-intensity) * 0.5%), rgba(var(--color-surface-100-rgb, 255, 255, 255), var(--glass-opacity))) 0%,
+      color-mix(in oklch, var(--color-secondary-400) calc(var(--accent-intensity) * 0.3%), rgba(var(--color-surface-100-rgb, 255, 255, 255), var(--glass-opacity))) 50%,
+      rgba(var(--color-surface-100-rgb, 255, 255, 255), var(--glass-opacity)) 100%
+    ) !important;
+}
+
+.dark [data-style="glassmorphic"] .card {
+  background: 
+    linear-gradient(135deg,
+      color-mix(in oklch, var(--color-primary-700) calc(var(--accent-intensity) * 0.6%), rgba(var(--color-surface-900-rgb, 0, 0, 0), var(--glass-opacity))) 0%,
+      color-mix(in oklch, var(--color-secondary-700) calc(var(--accent-intensity) * 0.4%), rgba(var(--color-surface-900-rgb, 0, 0, 0), var(--glass-opacity))) 50%,
+      rgba(var(--color-surface-900-rgb, 0, 0, 0), var(--glass-opacity)) 100%
+    ) !important;
+}
+
+/* Apply to preset-filled surfaces too */
+[data-style="glassmorphic"] .preset-filled-surface-100-900 {
+  background: 
+    linear-gradient(135deg,
+      color-mix(in oklch, var(--color-primary-400) calc(var(--accent-intensity) * 0.5%), rgba(var(--color-surface-100-rgb, 255, 255, 255), var(--glass-opacity))) 0%,
+      color-mix(in oklch, var(--color-secondary-400) calc(var(--accent-intensity) * 0.3%), rgba(var(--color-surface-100-rgb, 255, 255, 255), var(--glass-opacity))) 50%,
+      rgba(var(--color-surface-100-rgb, 255, 255, 255), var(--glass-opacity)) 100%
+    ) !important;
+}
+
+.dark [data-style="glassmorphic"] .preset-filled-surface-100-900 {
+  background: 
+    linear-gradient(135deg,
+      color-mix(in oklch, var(--color-primary-700) calc(var(--accent-intensity) * 0.6%), rgba(var(--color-surface-900-rgb, 0, 0, 0), var(--glass-opacity))) 0%,
+      color-mix(in oklch, var(--color-secondary-700) calc(var(--accent-intensity) * 0.4%), rgba(var(--color-surface-900-rgb, 0, 0, 0), var(--glass-opacity))) 50%,
+      rgba(var(--color-surface-900-rgb, 0, 0, 0), var(--glass-opacity)) 100%
+    ) !important;
+}
+
+/* Animated gradient orbs overlay */
+[data-style="glassmorphic"] .min-h-screen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle 600px at 25% 25%, 
+      color-mix(in oklch, var(--color-primary-500) calc(var(--accent-intensity) * 0.5%), transparent), 
+      transparent
+    ),
+    radial-gradient(circle 600px at 75% 75%, 
+      color-mix(in oklch, var(--color-secondary-500) calc(var(--accent-intensity) * 0.5%), transparent), 
+      transparent
+    ),
+    radial-gradient(circle 800px at 50% 50%, 
+      color-mix(in oklch, var(--color-tertiary-500) calc(var(--accent-intensity) * 0.3%), transparent), 
+      transparent
+    );
+  pointer-events: none;
+  opacity: 0.7;
+  animation: gradient-shift 30s ease-in-out infinite;
+  z-index: -1;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { 
+    transform: scale(1) translateX(0) translateY(0); 
+  }
+  25% { 
+    transform: scale(1.1) translateX(-5%) translateY(5%); 
+  }
+  50% { 
+    transform: scale(0.95) translateX(5%) translateY(-5%); 
+  }
+  75% { 
+    transform: scale(1.05) translateX(-3%) translateY(-3%); 
+  }
+}

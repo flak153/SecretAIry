@@ -1,9 +1,16 @@
 /* Import base component styles */
 @import './base.css';
 
+/* Import font recommendations */
+@import './fonts.css';
+
 /* Import all interface styles */
 @import './default.css';
 @import './glassmorphic.css';
+@import './glassmorphic-gradients.css';
 @import './material.css';
 @import './brutalist.css';
 @import './neumorphic.css';
+
+/* Dark mode fixes */
+@import './dark-mode-fix.css';

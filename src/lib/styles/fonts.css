@@ -1,0 +1,186 @@
+/* Font recommendations for Skeleton themes */
+/* Font imports are in fonts-import.css */
+
+/* Default font stack - clean, modern sans-serif */
+:root {
+  --base-font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --heading-font-family: var(--base-font-family);
+  --mono-font-family: 'JetBrains Mono', 'SF Mono', Consolas, 'Courier New', monospace;
+}
+
+/* Modern themes - clean, minimal sans-serif */
+:root[data-theme="wintry"],
+:root[data-theme="rocket"],
+:root[data-theme="modern"],
+:root[data-theme="hamlindigo"],
+:root[data-theme="mint"],
+:root[data-theme="cerberus"],
+:root[data-theme="concord"] {
+  --base-font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  --heading-font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Tech/Developer themes - technical, monospace-inspired */
+:root[data-theme="terminus"],
+:root[data-theme="vox"] {
+  --base-font-family: 'Space Grotesk', system-ui, sans-serif;
+  --heading-font-family: 'JetBrains Mono', monospace;
+}
+
+/* Retro/Vintage themes - classic serif and retro combinations */
+:root[data-theme="vintage"],
+:root[data-theme="legacy"],
+:root[data-theme="nouveau"] {
+  --base-font-family: 'Crimson Text', Georgia, serif;
+  --heading-font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* Bold/Strong themes - impactful, attention-grabbing */
+:root[data-theme="crimson"],
+:root[data-theme="reign"] {
+  --base-font-family: 'Manrope', system-ui, sans-serif;
+  --heading-font-family: 'Bebas Neue', Impact, sans-serif;
+}
+
+/* Warm/Desert themes - comfortable, readable */
+:root[data-theme="sahara"],
+:root[data-theme="fennec"] {
+  --base-font-family: 'Lexend', system-ui, sans-serif;
+  --heading-font-family: 'Lexend', system-ui, sans-serif;
+}
+
+/* Playful/Creative themes - friendly, approachable */
+:root[data-theme="seafoam"],
+:root[data-theme="rose"],
+:root[data-theme="catppuccin"],
+:root[data-theme="nosh"] {
+  --base-font-family: 'Fredoka', system-ui, sans-serif;
+  --heading-font-family: 'Fredoka', system-ui, sans-serif;
+}
+
+/* Elegant/Sophisticated themes */
+:root[data-theme="mona"],
+:root[data-theme="pine"] {
+  --base-font-family: 'Crimson Text', Georgia, serif;
+  --heading-font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* Apply font families to elements */
+body {
+  font-family: var(--base-font-family);
+  font-feature-settings: 'liga' 1, 'kern' 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: var(--heading-font-family);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* Specific heading adjustments for certain themes */
+:root[data-theme="vintage"] h1,
+:root[data-theme="vintage"] h2,
+:root[data-theme="legacy"] h1,
+:root[data-theme="legacy"] h2,
+:root[data-theme="nouveau"] h1,
+:root[data-theme="nouveau"] h2,
+:root[data-theme="mona"] h1,
+:root[data-theme="mona"] h2,
+:root[data-theme="pine"] h1,
+:root[data-theme="pine"] h2 {
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+
+:root[data-theme="crimson"] h1,
+:root[data-theme="crimson"] h2,
+:root[data-theme="reign"] h1,
+:root[data-theme="reign"] h2 {
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Code and monospace elements */
+code, kbd, pre, samp,
+.font-mono {
+  font-family: var(--mono-font-family);
+  font-size: 0.9em;
+}
+
+/* Buttons and UI elements - slightly smaller for better readability */
+button, .btn, .button {
+  font-family: var(--base-font-family);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+/* Forms */
+input, textarea, select {
+  font-family: var(--base-font-family);
+}
+
+/* Navigation */
+nav, .navigation {
+  font-family: var(--base-font-family);
+  font-weight: 500;
+}
+
+/* Card titles */
+.card-header h3,
+.card-header h4 {
+  font-family: var(--heading-font-family);
+}
+
+/* Special adjustments for playful themes */
+:root[data-theme="seafoam"] body,
+:root[data-theme="rose"] body,
+:root[data-theme="catppuccin"] body,
+:root[data-theme="nosh"] body {
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+/* Ensure proper font rendering in dark mode */
+:where(.dark) body {
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Font size adjustments for readability */
+:root {
+  font-size: 16px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    font-size: 16px;
+  }
+}
+
+/* Line height for better readability */
+body {
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.2;
+}
+
+/* Specific line height for serif fonts */
+:root[data-theme="vintage"] body,
+:root[data-theme="legacy"] body,
+:root[data-theme="nouveau"] body,
+:root[data-theme="mona"] body,
+:root[data-theme="pine"] body {
+  line-height: 1.65;
+}

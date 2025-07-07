@@ -1,110 +1,168 @@
-/* Glassmorphic Style - Frosted glass effects with blur and transparency */
-[data-style="glassmorphic"] {
-  /* Card styles */
-  --card-bg: rgba(var(--color-surface-100), 0.7);
-  --card-bg-dark: rgba(var(--color-surface-900), 0.7);
-  --card-border: 1px solid rgba(var(--color-surface-300), 0.3);
-  --card-border-dark: 1px solid rgba(var(--color-surface-700), 0.3);
-  --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-  --card-radius: var(--radius-lg);
-  --card-backdrop: blur(20px) saturate(180%);
-  
-  /* Button styles */
-  --button-bg: rgba(var(--color-surface-200), 0.6);
-  --button-bg-dark: rgba(var(--color-surface-800), 0.6);
-  --button-backdrop: blur(10px);
-  --button-border: 1px solid rgba(var(--color-surface-300), 0.2);
-  --button-shadow: 0 4px 12px 0 rgba(31, 38, 135, 0.1);
-  
-  /* Input styles */
-  --input-bg: rgba(var(--color-surface-50), 0.5);
-  --input-bg-dark: rgba(var(--color-surface-950), 0.5);
-  --input-border: 1px solid rgba(var(--color-surface-400), 0.3);
-  --input-border-dark: 1px solid rgba(var(--color-surface-600), 0.3);
-  --input-backdrop: blur(10px);
-  
-  /* App Bar */
-  --app-bar-bg: rgba(var(--color-surface-100), 0.8);
-  --app-bar-bg-dark: rgba(var(--color-surface-900), 0.8);
-  --app-bar-backdrop: blur(20px) saturate(180%);
+/* Glassmorphic Style - Dynamic glass effects with gradient backgrounds */
+
+/* CSS variables for glass effects */
+:root {
+  --glass-intensity: 50; /* Default intensity */
+  --accent-intensity: 30; /* Default accent intensity */
+  --glass-blur: calc(var(--glass-intensity) * 0.2px); /* 0-20px blur */
+  --glass-opacity: calc(1 - (var(--glass-intensity) * 0.007)); /* 1.0 to 0.3 opacity */
+  --glass-border-opacity: calc(var(--glass-intensity) * 0.002); /* 0 to 0.2 border opacity */
+  --glass-saturate: calc(1 + (var(--glass-intensity) * 0.005)); /* 1.0 to 1.5 saturation */
+  --accent-opacity: calc(var(--accent-intensity) * 0.01); /* 0 to 1.0 for gradients */
 }
 
-/* Apply glassmorphic styles */
+/* Gradient backgrounds are now in glassmorphic-gradients.css */
+
+/* Glass effects for cards - intensity-based blur and transparency */
 [data-style="glassmorphic"] .card {
-  background: var(--card-bg);
-  border: var(--card-border);
-  box-shadow: var(--card-shadow);
-  border-radius: var(--card-radius);
-  backdrop-filter: var(--card-backdrop);
-  -webkit-backdrop-filter: var(--card-backdrop);
-}
-
-[data-style="glassmorphic"] .dark .card {
-  background: var(--card-bg-dark);
-  border: var(--card-border-dark);
-}
-
-[data-style="glassmorphic"] .btn {
-  background: var(--button-bg);
-  border: var(--button-border);
-  box-shadow: var(--button-shadow);
-  backdrop-filter: var(--button-backdrop);
-  -webkit-backdrop-filter: var(--button-backdrop);
   position: relative;
-  overflow: hidden;
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  /* Background is handled in glassmorphic-gradients.css */
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, calc(var(--glass-border-opacity) * 2)),
+    0 4px 6px -1px rgb(0 0 0 / 0.1), 
+    0 2px 4px -2px rgb(0 0 0 / 0.1);
+  border: 1px solid rgb(255 255 255 / var(--glass-border-opacity));
 }
 
-[data-style="glassmorphic"] .dark .btn {
-  background: var(--button-bg-dark);
+.dark [data-style="glassmorphic"] .card {
+  /* Background is handled in glassmorphic-gradients.css */
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, calc(var(--glass-border-opacity) * 0.5)),
+    0 4px 6px -1px rgb(0 0 0 / 0.3), 
+    0 2px 4px -2px rgb(0 0 0 / 0.2);
+  border: 1px solid rgb(255 255 255 / calc(var(--glass-border-opacity) * 0.5));
 }
 
-[data-style="glassmorphic"] .btn::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.1) 0%,
-    rgba(255, 255, 255, 0) 50%,
-    rgba(255, 255, 255, 0.1) 100%
-  );
-  pointer-events: none;
+/* Surface presets with glass effects */
+[data-style="glassmorphic"] .preset-filled-surface-100-900 {
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  /* Background is handled in glassmorphic-gradients.css */
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, calc(var(--glass-border-opacity) * 2));
 }
 
+.dark [data-style="glassmorphic"] .preset-filled-surface-100-900 {
+  /* Background is handled in glassmorphic-gradients.css */
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, calc(var(--glass-border-opacity) * 0.5));
+}
+
+/* Card hover and transition effects */
+[data-style="glassmorphic"] .card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-style="glassmorphic"] .card:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, calc(var(--glass-border-opacity) * 3)),
+    0 20px 25px -5px rgb(0 0 0 / 0.1), 
+    0 10px 10px -5px rgb(0 0 0 / 0.04);
+}
+
+/* Button glass effects */
+[data-style="glassmorphic"] .btn {
+  backdrop-filter: blur(calc(var(--glass-blur) * 0.5));
+  -webkit-backdrop-filter: blur(calc(var(--glass-blur) * 0.5));
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgb(255 255 255 / var(--glass-border-opacity));
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, calc(var(--glass-border-opacity) * 2));
+}
+
+[data-style="glassmorphic"] .btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, calc(var(--glass-border-opacity) * 3)),
+    0 10px 15px -3px rgb(0 0 0 / 0.1), 
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+.dark [data-style="glassmorphic"] .btn {
+  border: 1px solid rgb(255 255 255 / calc(var(--glass-border-opacity) * 0.5));
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, calc(var(--glass-border-opacity) * 0.5));
+}
+
+.dark [data-style="glassmorphic"] .btn:hover {
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, calc(var(--glass-border-opacity) * 0.8)),
+    0 10px 15px -3px rgb(0 0 0 / 0.3), 
+    0 4px 6px -4px rgb(0 0 0 / 0.2);
+}
+
+/* Input glass effects */
 [data-style="glassmorphic"] input,
 [data-style="glassmorphic"] textarea,
 [data-style="glassmorphic"] select {
-  background: var(--input-bg);
-  border: var(--input-border);
-  backdrop-filter: var(--input-backdrop);
-  -webkit-backdrop-filter: var(--input-backdrop);
+  backdrop-filter: blur(calc(var(--glass-blur) * 0.5));
+  -webkit-backdrop-filter: blur(calc(var(--glass-blur) * 0.5));
+  background-color: rgba(var(--color-surface-50-rgb, 255, 255, 255), calc(var(--glass-opacity) * 0.8)) !important;
+  border: 1px solid rgb(255 255 255 / var(--glass-border-opacity));
 }
 
-[data-style="glassmorphic"] .dark input,
-[data-style="glassmorphic"] .dark textarea,
-[data-style="glassmorphic"] .dark select {
-  background: var(--input-bg-dark);
-  border: var(--input-border-dark);
+.dark [data-style="glassmorphic"] input,
+.dark [data-style="glassmorphic"] textarea,
+.dark [data-style="glassmorphic"] select {
+  background-color: rgba(var(--color-surface-800-rgb, 0, 0, 0), calc(var(--glass-opacity) * 0.8)) !important;
+  border: 1px solid rgb(255 255 255 / calc(var(--glass-border-opacity) * 0.5));
 }
 
-/* Glassmorphic App Bar */
-[data-style="glassmorphic"] header {
-  background: var(--app-bar-bg);
-  backdrop-filter: var(--app-bar-backdrop);
-  -webkit-backdrop-filter: var(--app-bar-backdrop);
+[data-style="glassmorphic"] input:focus,
+[data-style="glassmorphic"] textarea:focus {
+  outline: none;
+  border-color: var(--color-primary-500);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, calc(var(--glass-border-opacity) * 3)),
+    0 0 0 3px color-mix(in srgb, var(--color-primary-500) 20%, transparent 80%);
 }
 
-[data-style="glassmorphic"] .dark header {
-  background: var(--app-bar-bg-dark);
-}
-
-/* Glassmorphic navigation */
+/* Navigation glass effects */
+[data-style="glassmorphic"] header,
 [data-style="glassmorphic"] nav {
-  background: var(--card-bg);
-  backdrop-filter: var(--card-backdrop);
-  -webkit-backdrop-filter: var(--card-backdrop);
+  backdrop-filter: blur(calc(var(--glass-blur) * 1.2)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(calc(var(--glass-blur) * 1.2)) saturate(var(--glass-saturate));
+  background-color: rgba(var(--color-surface-100-rgb, 255, 255, 255), calc(var(--glass-opacity) * 0.9)) !important;
+  box-shadow: inset 0 -1px 1px 0 rgba(255, 255, 255, calc(var(--glass-border-opacity) * 2));
 }
 
-[data-style="glassmorphic"] .dark nav {
-  background: var(--card-bg-dark);
+.dark [data-style="glassmorphic"] header,
+.dark [data-style="glassmorphic"] nav {
+  background-color: rgba(var(--color-surface-900-rgb, 0, 0, 0), calc(var(--glass-opacity) * 0.9)) !important;
+  box-shadow: inset 0 -1px 1px 0 rgba(255, 255, 255, calc(var(--glass-border-opacity) * 0.5));
+}
+
+/* Badge glass effects */
+[data-style="glassmorphic"] .badge {
+  backdrop-filter: blur(calc(var(--glass-blur) * 0.5));
+  -webkit-backdrop-filter: blur(calc(var(--glass-blur) * 0.5));
+}
+
+/* Additional component styles */
+[data-style="glassmorphic"] .timeline-event {
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, calc(var(--glass-border-opacity) * 2)),
+    0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.dark [data-style="glassmorphic"] .timeline-event {
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, calc(var(--glass-border-opacity) * 0.5)),
+    0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Add RGB fallback values for better transparency */
+:root {
+  --color-surface-50-rgb: 255, 255, 255;
+  --color-surface-100-rgb: 250, 250, 250;
+  --color-surface-800-rgb: 40, 40, 40;
+  --color-surface-900-rgb: 20, 20, 20;
+}
+
+.dark {
+  --color-surface-50-rgb: 60, 60, 60;
+  --color-surface-100-rgb: 40, 40, 40;
+  --color-surface-800-rgb: 20, 20, 20;
+  --color-surface-900-rgb: 10, 10, 10;
 }

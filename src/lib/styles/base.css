@@ -7,32 +7,32 @@
   padding: 0.25rem 0.75rem;
   font-size: 0.75rem;
   font-weight: 500;
-  border-radius: var(--radius-default);
-  background: rgb(var(--color-surface-200));
-  color: rgb(var(--color-surface-900));
+  border-radius: var(--radius-base);
+  background: var(--color-surface-200);
+  color: var(--color-surface-contrast-200);
 }
 
-.dark .badge {
-  background: rgb(var(--color-surface-800));
-  color: rgb(var(--color-surface-100));
+:where(.dark) .badge {
+  background: var(--color-surface-800);
+  color: var(--color-surface-contrast-800);
 }
 
 /* Progress base styles */
 .progress-track {
   width: 100%;
   height: 0.5rem;
-  background: rgb(var(--color-surface-200));
-  border-radius: var(--radius-full);
+  background: var(--color-surface-200);
+  border-radius: 9999px;
   overflow: hidden;
 }
 
-.dark .progress-track {
-  background: rgb(var(--color-surface-800));
+:where(.dark) .progress-track {
+  background: var(--color-surface-800);
 }
 
 .progress-fill {
   height: 100%;
-  background: rgb(var(--color-primary-500));
+  background: var(--color-primary-500);
   transition: width 0.3s ease;
 }
 
@@ -40,19 +40,19 @@
 .switch {
   width: 2.5rem;
   height: 1.25rem;
-  background: rgb(var(--color-surface-300));
-  border-radius: var(--radius-full);
+  background: var(--color-surface-300);
+  border-radius: 9999px;
   position: relative;
   cursor: pointer;
   transition: background 0.3s ease;
 }
 
-.dark .switch {
-  background: rgb(var(--color-surface-700));
+:where(.dark) .switch {
+  background: var(--color-surface-700);
 }
 
 .switch.active {
-  background: rgb(var(--color-primary-500));
+  background: var(--color-primary-500);
 }
 
 .switch-thumb {
@@ -81,4 +81,9 @@
   width: 100%;
   text-align: left;
   padding: 0.75rem 1rem;
+}
+
+/* Utility classes */
+.rotate-180 {
+  transform: rotate(180deg);
 }

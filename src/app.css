@@ -1,13 +1,19 @@
-/* Tailwind base */
+/* Configure Tailwind */
+@config "../tailwind.config.js";
+
+/* Import fonts first to avoid CSS errors */
+@import './lib/styles/fonts-import.css';
+
+/* Tailwind base - includes dark mode support */
 @import 'tailwindcss';
 
-/* Skeleton base styles */
-@import '@skeletonlabs/skeleton';
-
-/* Import themes */
+/* Import themes - must be before Skeleton */
 @import './theme.css';
 
-/* Skeleton optional presets */
+/* Skeleton base styles with components */
+@import '@skeletonlabs/skeleton';
+
+/* Skeleton presets - includes dark mode variants */
 @import '@skeletonlabs/skeleton/optional/presets';
 
 /* Tailwind Plugins */
@@ -15,6 +21,11 @@
 @plugin '@tailwindcss/typography';
 
 /* Custom styles for components */
+
+/* Ensure Skeleton dark mode works with our dark class */
+:root.dark {
+  color-scheme: dark;
+}
 
 /* Import interface styles */
 @import './lib/styles/index.css';
