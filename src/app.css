@@ -1,0 +1,11 @@
+@import 'tailwindcss';
+
+/* Skeleton Theme - Using Wintry theme as default */
+@import '@skeletonlabs/skeleton/themes/wintry';
+
+/* Skeleton UI Styles - must come after theme */
+@import '@skeletonlabs/skeleton';
+
+/* Tailwind Plugins */
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
