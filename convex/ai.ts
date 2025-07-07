@@ -89,7 +89,7 @@ async function findAvailableSlots(ctx: any, userId: string) {
         slotEnd.setMinutes(slotEnd.getMinutes() + 30);
         
         // Check if slot conflicts with any event
-        const hasConflict = events.some(event => {
+        const hasConflict = events.some((event: any) => {
           const eventStart = new Date(event.startTime);
           const eventEnd = new Date(event.endTime);
           return (slotStart < eventEnd && slotEnd > eventStart);

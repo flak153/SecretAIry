@@ -4,6 +4,7 @@
 	import { calendarStore } from '$lib/stores/calendar.svelte';
 	import { useMutation } from '$lib/convex.svelte';
 	import { api } from '$lib/convex-api';
+	import { PUBLIC_GOOGLE_CLIENT_ID, PUBLIC_GOOGLE_API_KEY } from '$env/static/public';
 	
 	interface Props {
 		onEventsLoaded?: (events: any[]) => void;
@@ -12,8 +13,8 @@
 	let { onEventsLoaded }: Props = $props();
 	
 	// Google Calendar API configuration - uses environment variables
-	const CLIENT_ID = import.meta.env.PUBLIC_GOOGLE_CLIENT_ID || '';
-	const API_KEY = import.meta.env.PUBLIC_GOOGLE_API_KEY || '';
+	const CLIENT_ID = PUBLIC_GOOGLE_CLIENT_ID || '';
+	const API_KEY = PUBLIC_GOOGLE_API_KEY || '';
 	const SCOPES = 'https://www.googleapis.com/auth/calendar.readonly';
 	const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest';
 	
