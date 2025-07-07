@@ -1,0 +1,161 @@
+/* Brutalist Style - Bold, harsh lines and strong contrasts */
+[data-style="brutalist"] {
+  /* Card styles */
+  --card-bg: rgb(var(--color-surface-100));
+  --card-bg-dark: rgb(var(--color-surface-900));
+  --card-border: 3px solid rgb(var(--color-surface-900));
+  --card-border-dark: 3px solid rgb(var(--color-surface-100));
+  --card-shadow: 6px 6px 0 rgb(var(--color-surface-900));
+  --card-shadow-dark: 6px 6px 0 rgb(var(--color-surface-100));
+  --card-radius: 0;
+  
+  /* Button styles */
+  --button-border: 3px solid rgb(var(--color-surface-900));
+  --button-border-dark: 3px solid rgb(var(--color-surface-100));
+  --button-shadow: 4px 4px 0 rgb(var(--color-surface-900));
+  --button-shadow-dark: 4px 4px 0 rgb(var(--color-surface-100));
+  --button-shadow-active: 2px 2px 0 rgb(var(--color-surface-900));
+  --button-transform: translate(2px, 2px);
+  --button-radius: 0;
+  
+  /* Input styles */
+  --input-border: 3px solid rgb(var(--color-surface-900));
+  --input-border-dark: 3px solid rgb(var(--color-surface-100));
+  --input-radius: 0;
+  --input-shadow: inset 3px 3px 0 rgba(var(--color-surface-900), 0.1);
+  
+  /* Typography */
+  --heading-font-weight: 900;
+  --text-transform: uppercase;
+  --letter-spacing: 0.05em;
+}
+
+/* Brutalist Cards */
+[data-style="brutalist"] .card {
+  background: var(--card-bg);
+  border: var(--card-border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  transition: all 0.1s;
+}
+
+[data-style="brutalist"] .dark .card {
+  background: var(--card-bg-dark);
+  border: var(--card-border-dark);
+  box-shadow: var(--card-shadow-dark);
+}
+
+[data-style="brutalist"] .card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0 rgb(var(--color-surface-900));
+}
+
+[data-style="brutalist"] .dark .card:hover {
+  box-shadow: 8px 8px 0 rgb(var(--color-surface-100));
+}
+
+/* Brutalist Buttons */
+[data-style="brutalist"] .btn {
+  border: var(--button-border);
+  border-radius: var(--button-radius);
+  box-shadow: var(--button-shadow);
+  text-transform: var(--text-transform);
+  letter-spacing: var(--letter-spacing);
+  font-weight: 700;
+  transition: all 0.1s;
+}
+
+[data-style="brutalist"] .dark .btn {
+  border: var(--button-border-dark);
+  box-shadow: var(--button-shadow-dark);
+}
+
+[data-style="brutalist"] .btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 rgb(var(--color-surface-900));
+}
+
+[data-style="brutalist"] .dark .btn:hover {
+  box-shadow: 5px 5px 0 rgb(var(--color-surface-100));
+}
+
+[data-style="brutalist"] .btn:active {
+  transform: var(--button-transform);
+  box-shadow: var(--button-shadow-active);
+}
+
+[data-style="brutalist"] .dark .btn:active {
+  box-shadow: 2px 2px 0 rgb(var(--color-surface-100));
+}
+
+/* Brutalist Inputs */
+[data-style="brutalist"] input,
+[data-style="brutalist"] textarea,
+[data-style="brutalist"] select {
+  border: var(--input-border);
+  border-radius: var(--input-radius);
+  box-shadow: var(--input-shadow);
+  font-weight: 600;
+  transition: all 0.1s;
+}
+
+[data-style="brutalist"] .dark input,
+[data-style="brutalist"] .dark textarea,
+[data-style="brutalist"] .dark select {
+  border: var(--input-border-dark);
+}
+
+[data-style="brutalist"] input:focus,
+[data-style="brutalist"] textarea:focus {
+  outline: none;
+  transform: translate(-1px, -1px);
+  box-shadow: inset 3px 3px 0 rgba(var(--color-surface-900), 0.2);
+}
+
+/* Brutalist Typography */
+[data-style="brutalist"] h1,
+[data-style="brutalist"] h2,
+[data-style="brutalist"] h3,
+[data-style="brutalist"] h4,
+[data-style="brutalist"] h5,
+[data-style="brutalist"] h6 {
+  font-weight: var(--heading-font-weight);
+  text-transform: var(--text-transform);
+  letter-spacing: var(--letter-spacing);
+}
+
+/* Brutalist Navigation */
+[data-style="brutalist"] nav {
+  border-right: 3px solid rgb(var(--color-surface-900));
+}
+
+[data-style="brutalist"] .dark nav {
+  border-right: 3px solid rgb(var(--color-surface-100));
+}
+
+/* Brutalist dividers */
+[data-style="brutalist"] hr {
+  border: none;
+  height: 3px;
+  background: rgb(var(--color-surface-900));
+  margin: 2rem 0;
+}
+
+[data-style="brutalist"] .dark hr {
+  background: rgb(var(--color-surface-100));
+}
+
+/* Brutalist badges */
+[data-style="brutalist"] .badge {
+  border: 2px solid rgb(var(--color-surface-900));
+  border-radius: 0;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 2px 2px 0 rgb(var(--color-surface-900));
+}
+
+[data-style="brutalist"] .dark .badge {
+  border: 2px solid rgb(var(--color-surface-100));
+  box-shadow: 2px 2px 0 rgb(var(--color-surface-100));
+}

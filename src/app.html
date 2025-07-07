@@ -4,9 +4,23 @@
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.svg" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<script>
+			// Set theme and style immediately to prevent flash
+			const savedTheme = localStorage.getItem('theme') || 'wintry';
+			const savedStyle = localStorage.getItem('style') || 'default';
+			document.documentElement.setAttribute('data-theme', savedTheme);
+			document.documentElement.setAttribute('data-style', savedStyle);
+		</script>
 		%sveltekit.head%
 	</head>
-	<body data-sveltekit-preload-data="hover" data-theme="wintry">
+	<body data-sveltekit-preload-data="hover">
+		<script>
+			// Also set on body for compatibility
+			const savedTheme = localStorage.getItem('theme') || 'wintry';
+			const savedStyle = localStorage.getItem('style') || 'default';
+			document.body.setAttribute('data-theme', savedTheme);
+			document.body.setAttribute('data-style', savedStyle);
+		</script>
 		<div style="display: contents">%sveltekit.body%</div>
 	</body>
 </html>

@@ -1,0 +1,110 @@
+/* Glassmorphic Style - Frosted glass effects with blur and transparency */
+[data-style="glassmorphic"] {
+  /* Card styles */
+  --card-bg: rgba(var(--color-surface-100), 0.7);
+  --card-bg-dark: rgba(var(--color-surface-900), 0.7);
+  --card-border: 1px solid rgba(var(--color-surface-300), 0.3);
+  --card-border-dark: 1px solid rgba(var(--color-surface-700), 0.3);
+  --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+  --card-radius: var(--radius-lg);
+  --card-backdrop: blur(20px) saturate(180%);
+  
+  /* Button styles */
+  --button-bg: rgba(var(--color-surface-200), 0.6);
+  --button-bg-dark: rgba(var(--color-surface-800), 0.6);
+  --button-backdrop: blur(10px);
+  --button-border: 1px solid rgba(var(--color-surface-300), 0.2);
+  --button-shadow: 0 4px 12px 0 rgba(31, 38, 135, 0.1);
+  
+  /* Input styles */
+  --input-bg: rgba(var(--color-surface-50), 0.5);
+  --input-bg-dark: rgba(var(--color-surface-950), 0.5);
+  --input-border: 1px solid rgba(var(--color-surface-400), 0.3);
+  --input-border-dark: 1px solid rgba(var(--color-surface-600), 0.3);
+  --input-backdrop: blur(10px);
+  
+  /* App Bar */
+  --app-bar-bg: rgba(var(--color-surface-100), 0.8);
+  --app-bar-bg-dark: rgba(var(--color-surface-900), 0.8);
+  --app-bar-backdrop: blur(20px) saturate(180%);
+}
+
+/* Apply glassmorphic styles */
+[data-style="glassmorphic"] .card {
+  background: var(--card-bg);
+  border: var(--card-border);
+  box-shadow: var(--card-shadow);
+  border-radius: var(--card-radius);
+  backdrop-filter: var(--card-backdrop);
+  -webkit-backdrop-filter: var(--card-backdrop);
+}
+
+[data-style="glassmorphic"] .dark .card {
+  background: var(--card-bg-dark);
+  border: var(--card-border-dark);
+}
+
+[data-style="glassmorphic"] .btn {
+  background: var(--button-bg);
+  border: var(--button-border);
+  box-shadow: var(--button-shadow);
+  backdrop-filter: var(--button-backdrop);
+  -webkit-backdrop-filter: var(--button-backdrop);
+  position: relative;
+  overflow: hidden;
+}
+
+[data-style="glassmorphic"] .dark .btn {
+  background: var(--button-bg-dark);
+}
+
+[data-style="glassmorphic"] .btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0) 50%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  pointer-events: none;
+}
+
+[data-style="glassmorphic"] input,
+[data-style="glassmorphic"] textarea,
+[data-style="glassmorphic"] select {
+  background: var(--input-bg);
+  border: var(--input-border);
+  backdrop-filter: var(--input-backdrop);
+  -webkit-backdrop-filter: var(--input-backdrop);
+}
+
+[data-style="glassmorphic"] .dark input,
+[data-style="glassmorphic"] .dark textarea,
+[data-style="glassmorphic"] .dark select {
+  background: var(--input-bg-dark);
+  border: var(--input-border-dark);
+}
+
+/* Glassmorphic App Bar */
+[data-style="glassmorphic"] header {
+  background: var(--app-bar-bg);
+  backdrop-filter: var(--app-bar-backdrop);
+  -webkit-backdrop-filter: var(--app-bar-backdrop);
+}
+
+[data-style="glassmorphic"] .dark header {
+  background: var(--app-bar-bg-dark);
+}
+
+/* Glassmorphic navigation */
+[data-style="glassmorphic"] nav {
+  background: var(--card-bg);
+  backdrop-filter: var(--card-backdrop);
+  -webkit-backdrop-filter: var(--card-backdrop);
+}
+
+[data-style="glassmorphic"] .dark nav {
+  background: var(--card-bg-dark);
+}

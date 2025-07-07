@@ -1,0 +1,161 @@
+/* Neumorphic Style - Soft, extruded plastic look with inset shadows */
+[data-style="neumorphic"] {
+  /* Card styles */
+  --card-bg: rgb(var(--color-surface-200));
+  --card-bg-dark: rgb(var(--color-surface-800));
+  --card-border: none;
+  --card-radius: var(--radius-xl);
+  --card-shadow: 8px 8px 16px rgba(0, 0, 0, 0.15), -8px -8px 16px rgba(255, 255, 255, 0.1);
+  --card-shadow-dark: 8px 8px 16px rgba(0, 0, 0, 0.3), -8px -8px 16px rgba(255, 255, 255, 0.05);
+  --card-shadow-inset: inset 8px 8px 16px rgba(0, 0, 0, 0.15), inset -8px -8px 16px rgba(255, 255, 255, 0.1);
+  
+  /* Button styles */
+  --button-bg: rgb(var(--color-surface-200));
+  --button-bg-dark: rgb(var(--color-surface-800));
+  --button-radius: var(--radius-xl);
+  --button-shadow: 6px 6px 12px rgba(0, 0, 0, 0.15), -6px -6px 12px rgba(255, 255, 255, 0.1);
+  --button-shadow-dark: 6px 6px 12px rgba(0, 0, 0, 0.3), -6px -6px 12px rgba(255, 255, 255, 0.05);
+  --button-shadow-active: inset 4px 4px 8px rgba(0, 0, 0, 0.15), inset -4px -4px 8px rgba(255, 255, 255, 0.1);
+  
+  /* Input styles */
+  --input-bg: rgb(var(--color-surface-200));
+  --input-bg-dark: rgb(var(--color-surface-800));
+  --input-radius: var(--radius-lg);
+  --input-shadow-inset: inset 4px 4px 8px rgba(0, 0, 0, 0.1), inset -4px -4px 8px rgba(255, 255, 255, 0.1);
+  --input-shadow-inset-dark: inset 4px 4px 8px rgba(0, 0, 0, 0.2), inset -4px -4px 8px rgba(255, 255, 255, 0.05);
+  
+  /* Switch styles */
+  --switch-bg: rgb(var(--color-surface-200));
+  --switch-shadow-inset: inset 2px 2px 4px rgba(0, 0, 0, 0.1), inset -2px -2px 4px rgba(255, 255, 255, 0.1);
+  --switch-thumb-shadow: 3px 3px 6px rgba(0, 0, 0, 0.15), -3px -3px 6px rgba(255, 255, 255, 0.1);
+}
+
+/* Neumorphic Cards */
+[data-style="neumorphic"] .card {
+  background: var(--card-bg);
+  border: var(--card-border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  transition: all 0.3s ease;
+}
+
+[data-style="neumorphic"] .dark .card {
+  background: var(--card-bg-dark);
+  box-shadow: var(--card-shadow-dark);
+}
+
+[data-style="neumorphic"] .card-inset {
+  box-shadow: var(--card-shadow-inset);
+}
+
+/* Neumorphic Buttons */
+[data-style="neumorphic"] .btn {
+  background: var(--button-bg);
+  border: none;
+  border-radius: var(--button-radius);
+  box-shadow: var(--button-shadow);
+  transition: all 0.3s ease;
+}
+
+[data-style="neumorphic"] .dark .btn {
+  background: var(--button-bg-dark);
+  box-shadow: var(--button-shadow-dark);
+}
+
+[data-style="neumorphic"] .btn:hover {
+  box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.15), -8px -8px 16px rgba(255, 255, 255, 0.1);
+}
+
+[data-style="neumorphic"] .btn:active {
+  box-shadow: var(--button-shadow-active);
+}
+
+/* Neumorphic Inputs */
+[data-style="neumorphic"] input,
+[data-style="neumorphic"] textarea,
+[data-style="neumorphic"] select {
+  background: var(--input-bg);
+  border: none;
+  border-radius: var(--input-radius);
+  box-shadow: var(--input-shadow-inset);
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+}
+
+[data-style="neumorphic"] .dark input,
+[data-style="neumorphic"] .dark textarea,
+[data-style="neumorphic"] .dark select {
+  background: var(--input-bg-dark);
+  box-shadow: var(--input-shadow-inset-dark);
+}
+
+[data-style="neumorphic"] input:focus,
+[data-style="neumorphic"] textarea:focus {
+  outline: none;
+  box-shadow: inset 6px 6px 12px rgba(0, 0, 0, 0.15), inset -6px -6px 12px rgba(255, 255, 255, 0.1);
+}
+
+/* Neumorphic Progress bars */
+[data-style="neumorphic"] .progress-track {
+  background: var(--card-bg);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--input-shadow-inset);
+  height: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+[data-style="neumorphic"] .progress-fill {
+  height: 100%;
+  background: linear-gradient(145deg, rgb(var(--color-primary-400)), rgb(var(--color-primary-600)));
+  border-radius: var(--radius-xl);
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Neumorphic Switches */
+[data-style="neumorphic"] .switch {
+  width: 3rem;
+  height: 1.5rem;
+  background: var(--switch-bg);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--switch-shadow-inset);
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+[data-style="neumorphic"] .switch-thumb {
+  position: absolute;
+  top: 0.25rem;
+  left: 0.25rem;
+  width: 1rem;
+  height: 1rem;
+  background: rgb(var(--color-surface-200));
+  border-radius: 50%;
+  box-shadow: var(--switch-thumb-shadow);
+  transition: transform 0.3s ease;
+}
+
+[data-style="neumorphic"] .switch.active .switch-thumb {
+  transform: translateX(1.5rem);
+  background: rgb(var(--color-primary-500));
+}
+
+/* Neumorphic Badges */
+[data-style="neumorphic"] .badge {
+  background: var(--card-bg);
+  border-radius: var(--radius-xl);
+  padding: 0.25rem 0.75rem;
+  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1), -3px -3px 6px rgba(255, 255, 255, 0.1);
+}
+
+/* Neumorphic Navigation items */
+[data-style="neumorphic"] nav a:hover {
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow-inset);
+}
+
+/* Neumorphic Avatars */
+[data-style="neumorphic"] .avatar {
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.15), -4px -4px 8px rgba(255, 255, 255, 0.1);
+}

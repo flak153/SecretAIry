@@ -1,0 +1,9 @@
+/* Import base component styles */
+@import './base.css';
+
+/* Import all interface styles */
+@import './default.css';
+@import './glassmorphic.css';
+@import './material.css';
+@import './brutalist.css';
+@import './neumorphic.css';

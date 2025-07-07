@@ -1,31 +1,24 @@
 <script lang="ts">
 	import '../app.css';
+	import ThemeSwitcher from '$lib/ThemeSwitcher.svelte';
+	import Sidebar from '$lib/components/Sidebar.svelte';
 
 	let { children } = $props();
 </script>
 
 <!-- App Shell -->
-<div class="app-shell">
-	<!-- Header -->
-	<header class="app-bar bg-surface-100-800-token shadow-sm">
-		<div class="app-bar-slot-lead">
-			<strong class="text-xl uppercase">Secretairy</strong>
-		</div>
-		<div class="app-bar-slot-default"></div>
-		<div class="app-bar-slot-trail">
-			<a
-				class="btn btn-sm variant-ghost-surface"
-				href="https://skeleton.dev/"
-				target="_blank"
-				rel="noreferrer"
-			>
-				Skeleton
-			</a>
-		</div>
-	</header>
+<div class="min-h-screen bg-surface-50 dark:bg-surface-950">
+	<!-- Sidebar -->
+	<Sidebar />
 	
 	<!-- Page Content -->
-	<main class="container mx-auto">
+	<main class="ml-16 transition-all duration-300">
 		{@render children()}
 	</main>
 </div>
+
+<style>
+	.ml-16 {
+		margin-left: 4rem;
+	}
+</style>

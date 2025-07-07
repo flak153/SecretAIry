@@ -1,0 +1,43 @@
+/* Default Style - Clean and simple interface */
+[data-style="default"] {
+  /* Card styles */
+  --card-bg: rgb(var(--color-surface-100));
+  --card-bg-dark: rgb(var(--color-surface-900));
+  --card-border: 1px solid rgb(var(--color-surface-300));
+  --card-border-dark: 1px solid rgb(var(--color-surface-700));
+  --card-shadow: none;
+  --card-radius: var(--radius);
+  
+  /* Button styles */
+  --button-shadow: none;
+  --button-transform: scale(0.98);
+  --button-transform-duration: 0.1s;
+  
+  /* Input styles */
+  --input-border: 1px solid rgb(var(--color-surface-400));
+  --input-border-dark: 1px solid rgb(var(--color-surface-600));
+  --input-focus-ring: 2px solid rgb(var(--color-primary-500));
+  --input-radius: var(--radius);
+  
+  /* General */
+  --backdrop-blur: none;
+  --surface-opacity: 1;
+}
+
+/* Apply default styles to components */
+[data-style="default"] .card {
+  background: var(--card-bg);
+  border: var(--card-border);
+  box-shadow: var(--card-shadow);
+  border-radius: var(--card-radius);
+}
+
+[data-style="default"] .dark .card {
+  background: var(--card-bg-dark);
+  border: var(--card-border-dark);
+}
+
+[data-style="default"] .btn:active {
+  transform: var(--button-transform);
+  transition-duration: var(--button-transform-duration);
+}

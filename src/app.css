@@ -1,10 +1,20 @@
 /* Tailwind base */
 @import 'tailwindcss';
 
-/* Import all Skeleton styles directly */
-@import '@skeletonlabs/skeleton/themes/wintry.css';
-@import '@skeletonlabs/skeleton/index.css';
+/* Skeleton base styles */
+@import '@skeletonlabs/skeleton';
+
+/* Import themes */
+@import './theme.css';
+
+/* Skeleton optional presets */
+@import '@skeletonlabs/skeleton/optional/presets';
 
 /* Tailwind Plugins */
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
+
+/* Custom styles for components */
+
+/* Import interface styles */
+@import './lib/styles/index.css';
