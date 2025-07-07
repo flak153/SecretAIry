@@ -5,7 +5,7 @@
 <div class="container mx-auto p-8 space-y-8">
 	<!-- Hero Section -->
 	<div class="card p-8 variant-glass-primary">
-		<h1 class="h1 mb-4">Welcome to SecretAIry</h1>
+		<h1 class="h1 mb-4">Welcome to Secretairy</h1>
 		<p class="text-lg">Built with SvelteKit, Skeleton UI, and Convex</p>
 	</div>
 

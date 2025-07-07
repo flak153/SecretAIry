@@ -9,7 +9,7 @@
 	<!-- Header -->
 	<header class="app-bar bg-surface-100-800-token shadow-sm">
 		<div class="app-bar-slot-lead">
-			<strong class="text-xl uppercase">SecretAIry</strong>
+			<strong class="text-xl uppercase">Secretairy</strong>
 		</div>
 		<div class="app-bar-slot-default"></div>
 		<div class="app-bar-slot-trail">
