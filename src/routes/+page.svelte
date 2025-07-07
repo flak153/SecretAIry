@@ -5,14 +5,40 @@
 	import WeekView from '$lib/components/WeekView.svelte';
 	import DayView from '$lib/components/DayView.svelte';
 	import AIAssistant from '$lib/components/AIAssistant.svelte';
-	import TaskManager from '$lib/components/TaskManager.svelte';
+	import TaskManager from '$lib/components/TaskManagerConvex.svelte';
 	import ModeSwitcher from '$lib/components/ModeSwitcher.svelte';
 	import ConvexTest from '$lib/components/ConvexTest.svelte';
 	import { calendarStore } from '$lib/stores/calendar.svelte';
+	import { useQuery } from '$lib/convex.svelte';
+	import { api } from '$lib/convex-api';
 	
 	// Calendar state - single source of truth
 	let selectedDate = $state(new Date());
 	let showChatbox = $state(true);
+	
+	// For demo, using hardcoded userId - in production, get from auth
+	const userId = "demo-user";
+	
+	// Query events from Convex
+	const startOfMonth = $derived((() => {
+		const date = new Date(selectedDate);
+		date.setDate(1);
+		date.setHours(0, 0, 0, 0);
+		return date.toISOString();
+	})());
+	
+	const endOfMonth = $derived((() => {
+		const date = new Date(selectedDate);
+		date.setMonth(date.getMonth() + 1, 0);
+		date.setHours(23, 59, 59, 999);
+		return date.toISOString();
+	})());
+	
+	const eventsQuery = useQuery(api.events.getEvents, { 
+		userId, 
+		startDate: startOfMonth, 
+		endDate: endOfMonth 
+	});
 	
 	// Navigation functions
 	function navigatePrevMonth() {
@@ -78,29 +104,60 @@
 		return date.toLocaleDateString('en-US', { weekday: 'short', day: 'numeric' });
 	}
 	
-	// Get events from the calendar store
-	$effect(() => {
-		// Force reactivity when events change
-		calendarStore.events;
-	});
+	// Transform Convex events to the expected format
+	let events = $derived(
+		eventsQuery.loading || !eventsQuery.value
+			? (calendarStore.events.length > 0 ? calendarStore.getEventsByCalendar() : {
+				work: [
+					{ date: new Date(), hours: 6, title: 'Client meetings' },
+					{ date: new Date(Date.now() + 86400000), hours: 8, title: 'Project development' },
+					{ date: new Date(Date.now() + 172800000), hours: 4, title: 'Team standup' },
+				],
+				personal: [
+					{ date: new Date(), hours: 2, title: 'Gym' },
+					{ date: new Date(), hours: 1, title: 'Lunch with Sarah' },
+					{ date: new Date(Date.now() + 86400000), hours: 3, title: 'Shopping' },
+				],
+				chores: [
+					{ date: new Date(), hours: 1, title: 'Grocery shopping' },
+					{ date: new Date(Date.now() + 172800000), hours: 2, title: 'House cleaning' },
+				]
+			})
+			: (() => {
+				// Transform Convex events
+				const convexEvents = eventsQuery.value || [];
+				const work = convexEvents.filter(e => e.calendar === 'work').map(e => ({
+					date: new Date(e.startTime),
+					hours: calculateHours(e),
+					title: e.title,
+					startTime: e.startTime,
+					endTime: e.endTime,
+					allDay: e.allDay,
+					location: e.location,
+					description: e.description
+				}));
+				
+				const personal = convexEvents.filter(e => e.calendar === 'personal').map(e => ({
+					date: new Date(e.startTime),
+					hours: calculateHours(e),
+					title: e.title,
+					startTime: e.startTime,
+					endTime: e.endTime,
+					allDay: e.allDay,
+					location: e.location,
+					description: e.description
+				}));
+				
+				return { work, personal, chores: [] };
+			})()
+	);
 	
-	// Use events from calendar store or fall back to mock data
-	let events = $derived(calendarStore.events.length > 0 ? calendarStore.getEventsByCalendar() : {
-		work: [
-			{ date: new Date(), hours: 6, title: 'Client meetings' },
-			{ date: new Date(Date.now() + 86400000), hours: 8, title: 'Project development' },
-			{ date: new Date(Date.now() + 172800000), hours: 4, title: 'Team standup' },
-		],
-		personal: [
-			{ date: new Date(), hours: 2, title: 'Gym' },
-			{ date: new Date(), hours: 1, title: 'Lunch with Sarah' },
-			{ date: new Date(Date.now() + 86400000), hours: 3, title: 'Shopping' },
-		],
-		chores: [
-			{ date: new Date(), hours: 1, title: 'Grocery shopping' },
-			{ date: new Date(Date.now() + 172800000), hours: 2, title: 'House cleaning' },
-		]
-	});
+	function calculateHours(event: any): number {
+		if (event.allDay) return 8;
+		const start = new Date(event.startTime);
+		const end = new Date(event.endTime);
+		return (end.getTime() - start.getTime()) / (1000 * 60 * 60);
+	}
 </script>
 
 <div class="h-screen flex flex-col bg-surface-50 dark:bg-surface-950">
@@ -171,8 +228,7 @@
 		
 		<!-- Right Sidebar: AI Assistant -->
 		{#if showChatbox}
-			<aside class="w-80 h-full border-l border-surface-300 dark:border-surface-700 transition-all duration-300 pl-4 pr-2 py-2 space-y-4">
-				<ConvexTest />
+			<aside class="w-80 h-full border-l border-surface-300 dark:border-surface-700 transition-all duration-300 pl-4 pr-2 py-2">
 				<AIAssistant isOpen={true} />
 			</aside>
 		{/if}

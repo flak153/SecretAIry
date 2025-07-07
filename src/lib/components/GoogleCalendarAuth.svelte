@@ -2,6 +2,8 @@
 	import { onMount } from 'svelte';
 	import Icon from '$lib/Icon.svelte';
 	import { calendarStore } from '$lib/stores/calendar.svelte';
+	import { useMutation } from '$lib/convex.svelte';
+	import { api } from '$lib/convex-api';
 	
 	interface Props {
 		onEventsLoaded?: (events: any[]) => void;
@@ -9,7 +11,7 @@
 	
 	let { onEventsLoaded }: Props = $props();
 	
-	// Google Calendar API configuration - uses environment variables if available
+	// Google Calendar API configuration - uses environment variables
 	const CLIENT_ID = import.meta.env.PUBLIC_GOOGLE_CLIENT_ID || '';
 	const API_KEY = import.meta.env.PUBLIC_GOOGLE_API_KEY || '';
 	const SCOPES = 'https://www.googleapis.com/auth/calendar.readonly';
@@ -23,6 +25,12 @@
 	let tokenClient: any;
 	let gapiInited = $state(false);
 	let gisInited = $state(false);
+	
+	// Convex mutation for syncing events
+	const syncGoogleEvents = useMutation(api.events.syncGoogleEvents);
+	
+	// For demo, using hardcoded userId - in production, get from auth
+	const userId = "demo-user";
 	
 	onMount(() => {
 		// Load the Google API client library
@@ -162,6 +170,10 @@
 		events = [];
 		// Clear Google events from the store when signed out
 		calendarStore.syncGoogleEvents([]);
+		// Also clear from Convex
+		syncGoogleEvents({ userId, events: [] }).catch(err => {
+			console.error('Error clearing Convex events:', err);
+		});
 	}
 	
 	async function loadCalendarEvents() {
@@ -199,6 +211,24 @@
 			
 			// Sync events with the calendar store
 			calendarStore.syncGoogleEvents(events);
+			
+			// Sync to Convex database
+			try {
+				const convexEvents = events.map((e: any) => ({
+					googleEventId: e.id,
+					title: e.title,
+					description: e.description,
+					startTime: e.startTime,
+					endTime: e.endTime,
+					allDay: e.allDay,
+					location: e.location,
+					attendees: e.attendees,
+				}));
+				
+				await syncGoogleEvents({ userId, events: convexEvents });
+			} catch (err) {
+				console.error('Error syncing to Convex:', err);
+			}
 			
 			// Call the callback if provided
 			if (onEventsLoaded) {

@@ -1,15 +1,22 @@
 <script lang="ts">
-	import { useQuery, useMutation } from '$lib/convex';
-	import { api } from '../../../convex/_generated/api';
+	import { useQuery, useMutation } from '$lib/convex.svelte';
+	import { api } from '$lib/convex-api';
 	
 	// Simple query
-	const greeting = useQuery(api.hello.getGreeting);
+	const greetingQuery = useQuery(api.hello.getGreeting);
 	
 	// Query with args
 	let name = $state('');
-	const personalizedGreeting = $derived(
-		name ? useQuery(api.hello.getPersonalizedGreeting, { name }) : null
-	);
+	// For dynamic queries, we need to handle them differently
+	let personalizedQuery = $state<ReturnType<typeof useQuery> | null>(null);
+	
+	$effect(() => {
+		if (name) {
+			personalizedQuery = useQuery(api.hello.getPersonalizedGreeting, { name });
+		} else {
+			personalizedQuery = null;
+		}
+	});
 	
 	// Mutation
 	const saveMessage = useMutation(api.hello.saveMessage);
@@ -34,12 +41,12 @@
 	<!-- Simple Query -->
 	<div class="space-y-2">
 		<h3 class="text-sm font-medium opacity-75">Simple Query:</h3>
-		{#if $greeting === undefined}
+		{#if greetingQuery.loading}
 			<p class="text-sm">Loading...</p>
-		{:else if $greeting === null}
-			<p class="text-sm text-error-500">Error loading greeting</p>
+		{:else if greetingQuery.error}
+			<p class="text-sm text-error-500">Error: {greetingQuery.error.message}</p>
 		{:else}
-			<p class="text-lg">{$greeting}</p>
+			<p class="text-lg">{greetingQuery.value}</p>
 		{/if}
 	</div>
 	
@@ -52,8 +59,14 @@
 			placeholder="Enter your name"
 			class="input"
 		/>
-		{#if name && $personalizedGreeting}
-			<p class="text-lg">{$personalizedGreeting}</p>
+		{#if personalizedQuery}
+			{#if personalizedQuery.loading}
+				<p class="text-sm">Loading...</p>
+			{:else if personalizedQuery.error}
+				<p class="text-sm text-error-500">Error: {personalizedQuery.error.message}</p>
+			{:else}
+				<p class="text-lg">{personalizedQuery.value}</p>
+			{/if}
 		{/if}
 	</div>
 	

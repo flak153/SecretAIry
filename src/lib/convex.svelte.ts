@@ -1,9 +1,9 @@
 import { ConvexClient } from 'convex/browser';
 import type { FunctionReference, FunctionReturnType, FunctionArgs } from 'convex/server';
-import { PUBLIC_CONVEX_URL } from '$env/static/public';
 
-// Initialize Convex client
-export const convex = new ConvexClient(PUBLIC_CONVEX_URL);
+// Initialize Convex client - uses environment variable
+const CONVEX_URL = import.meta.env.PUBLIC_CONVEX_URL;
+export const convex = new ConvexClient(CONVEX_URL);
 
 // Simple reactive query hook for Svelte 5
 export function useQuery<Query extends FunctionReference<"query">>(

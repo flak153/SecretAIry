@@ -2,6 +2,19 @@ import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 
 export default defineSchema({
+  // Tasks
+  tasks: defineTable({
+    text: v.string(),
+    completed: v.boolean(),
+    userId: v.string(),
+    createdAt: v.number(),
+    completedAt: v.optional(v.number()),
+    order: v.number(),
+  })
+    .index("by_user", ["userId"])
+    .index("by_user_completed", ["userId", "completed"])
+    .index("by_user_order", ["userId", "order"]),
+
   // Calendar events
   events: defineTable({
     title: v.string(),
@@ -11,6 +24,13 @@ export default defineSchema({
     allDay: v.boolean(),
     calendar: v.union(v.literal("work"), v.literal("personal")),
     userId: v.string(),
+    location: v.optional(v.string()),
+    attendees: v.optional(v.array(v.object({
+      email: v.string(),
+      name: v.optional(v.string()),
+      responseStatus: v.optional(v.string()),
+      self: v.optional(v.boolean()),
+    }))),
     // For recurring events
     recurring: v.optional(v.object({
       frequency: v.union(v.literal("daily"), v.literal("weekly"), v.literal("monthly"), v.literal("yearly")),
