@@ -7,6 +7,7 @@
 	import AIAssistant from '$lib/components/AIAssistant.svelte';
 	import TaskManager from '$lib/components/TaskManager.svelte';
 	import ModeSwitcher from '$lib/components/ModeSwitcher.svelte';
+	import ConvexTest from '$lib/components/ConvexTest.svelte';
 	import { calendarStore } from '$lib/stores/calendar.svelte';
 	
 	// Calendar state - single source of truth
@@ -170,7 +171,8 @@
 		
 		<!-- Right Sidebar: AI Assistant -->
 		{#if showChatbox}
-			<aside class="w-80 h-full border-l border-surface-300 dark:border-surface-700 transition-all duration-300 pl-4 pr-2 py-2">
+			<aside class="w-80 h-full border-l border-surface-300 dark:border-surface-700 transition-all duration-300 pl-4 pr-2 py-2 space-y-4">
+				<ConvexTest />
 				<AIAssistant isOpen={true} />
 			</aside>
 		{/if}

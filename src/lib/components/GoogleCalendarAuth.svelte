@@ -9,11 +9,9 @@
 	
 	let { onEventsLoaded }: Props = $props();
 	
-	import { PUBLIC_GOOGLE_CLIENT_ID, PUBLIC_GOOGLE_API_KEY } from '$env/static/public';
-	
-	// Google Calendar API configuration
-	const CLIENT_ID = PUBLIC_GOOGLE_CLIENT_ID;
-	const API_KEY = PUBLIC_GOOGLE_API_KEY;
+	// Google Calendar API configuration - uses environment variables if available
+	const CLIENT_ID = import.meta.env.PUBLIC_GOOGLE_CLIENT_ID || '';
+	const API_KEY = import.meta.env.PUBLIC_GOOGLE_API_KEY || '';
 	const SCOPES = 'https://www.googleapis.com/auth/calendar.readonly';
 	const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest';
 	
@@ -223,7 +221,7 @@
 	});
 </script>
 
-<div class="card preset-filled-surface-100-900 p-4">
+<div class="card preset-filled-surface-200-800 p-4">
 	<div class="flex items-center justify-between mb-4">
 		<h3 class="text-lg font-semibold">Google Calendar</h3>
 		{#if isSignedIn}
@@ -243,7 +241,15 @@
 		</div>
 	{/if}
 	
-	{#if !isSignedIn}
+	{#if !CLIENT_ID || !API_KEY}
+		<div class="text-center py-8">
+			<div class="w-16 h-16 mx-auto mb-4 rounded-full bg-surface-200 dark:bg-surface-700 flex items-center justify-center">
+				<Icon name="settings" size={32} class="opacity-50" />
+			</div>
+			<p class="text-sm opacity-75 mb-2">Google Calendar integration not configured</p>
+			<p class="text-xs opacity-50">Set PUBLIC_GOOGLE_CLIENT_ID and PUBLIC_GOOGLE_API_KEY environment variables</p>
+		</div>
+	{:else if !isSignedIn}
 		<div class="text-center py-8">
 			<div class="w-16 h-16 mx-auto mb-4 rounded-full bg-surface-200 dark:bg-surface-700 flex items-center justify-center">
 				<svg class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">

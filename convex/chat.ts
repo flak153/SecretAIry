@@ -91,8 +91,12 @@ export const processUserMessage = action({
     
     // Simple AI response logic (to be replaced with actual AI integration)
     let aiResponse = "";
-    let action = null;
-    let relatedEventIds = [];
+    let action: {
+      type: "create_event" | "update_event" | "delete_event" | "suggest_reschedule" | "conflict_resolution";
+      status: "pending" | "completed" | "cancelled";
+      eventId?: Id<"events">;
+    } | undefined = undefined;
+    let relatedEventIds: Id<"events">[] = [];
     
     const lowerMessage = args.message.toLowerCase();
     

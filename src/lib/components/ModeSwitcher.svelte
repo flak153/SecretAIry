@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { themeStore } from '$lib/stores/theme.svelte';
+	import Portal from './Portal.svelte';
 	
 	let showDropdown = $state(false);
+	let buttonRef: HTMLButtonElement;
 	
 	// Get current mode icon
 	const modeIcons = {
@@ -35,10 +37,24 @@
 			return () => document.removeEventListener('click', handleClickOutside);
 		}
 	});
+	
+	// Get dropdown position
+	let dropdownPosition = $state({ top: 0, left: 0 });
+	
+	$effect(() => {
+		if (showDropdown && buttonRef) {
+			const rect = buttonRef.getBoundingClientRect();
+			dropdownPosition = {
+				top: rect.bottom + 8,
+				left: rect.right - 160 // 160px is the dropdown width
+			};
+		}
+	});
 </script>
 
 <div class="mode-switcher relative">
 	<button
+		bind:this={buttonRef}
 		class="btn btn-sm variant-ghost-surface rounded-lg p-2"
 		onclick={() => showDropdown = !showDropdown}
 		aria-label="Change theme mode"
@@ -51,7 +67,9 @@
 	</button>
 	
 	{#if showDropdown}
-		<div class="absolute right-0 mt-2 w-40 rounded-lg bg-surface-100 dark:bg-surface-800 shadow-xl border border-surface-300 dark:border-surface-600 overflow-hidden z-50">
+		<Portal>
+			<div class="fixed w-40 rounded-lg bg-surface-100 dark:bg-surface-800 shadow-xl border border-surface-300 dark:border-surface-600 overflow-hidden z-[99999]" 
+				style="top: {dropdownPosition.top}px; left: {dropdownPosition.left}px;">
 			<button
 				class="w-full px-4 py-2 text-left text-sm hover:bg-surface-200 dark:hover:bg-surface-700 flex items-center gap-3 {themeStore.mode === 'light' ? 'bg-surface-200 dark:bg-surface-700' : ''}"
 				onclick={() => selectMode('light')}
@@ -73,7 +91,8 @@
 				{@html modeIcons.system}
 				<span>System</span>
 			</button>
-		</div>
+			</div>
+		</Portal>
 	{/if}
 </div>
 

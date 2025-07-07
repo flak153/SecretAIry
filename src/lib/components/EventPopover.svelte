@@ -64,19 +64,26 @@
 	}
 	
 	let dateTime = $derived(formatDateTime(event.date, event.startTime, event.endTime));
+	
+	// Calculate position to prevent going above viewport
+	let adjustedY = $derived(() => {
+		const popoverHeight = 400; // Approximate max height
+		const minY = popoverHeight + 20; // Minimum Y to stay on screen
+		return Math.max(y, minY);
+	});
 </script>
 
 {#if visible}
 	<div 
 		role="tooltip"
-		class="event-popover absolute z-50 w-80"
-		style="left: {x}px; top: {y}px; transform: translate(-50%, -100%) translateY(-12px);"
+		class="event-popover absolute z-50 w-80 max-h-[80vh]"
+		style="left: {x}px; top: {adjustedY()}px; transform: translate(-50%, -100%) translateY(-12px);"
 		onmouseenter={() => onHover?.()}
 		onmouseleave={() => onLeave?.()}
 	>
-		<div class="card event-{event.type}-popover rounded-xl shadow-2xl overflow-hidden">
+		<div class="card event-{event.type}-popover rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh]">
 			<!-- Header with event type color -->
-			<div class="event-{event.type} px-4 py-3 text-white">
+			<div class="event-{event.type} px-4 py-3 text-white flex-shrink-0">
 				<div class="flex items-center justify-between">
 					<div class="flex items-center gap-2">
 						<Icon name={typeInfo.icon} size={16} />
@@ -84,11 +91,11 @@
 					</div>
 					<div class="text-xs opacity-75">{event.hours}h</div>
 				</div>
-				<h3 class="text-lg font-semibold mt-1">{event.title}</h3>
+				<h3 class="text-lg font-semibold mt-1 line-clamp-2">{event.title}</h3>
 			</div>
 			
 			<!-- Content -->
-			<div class="p-4 space-y-3">
+			<div class="p-4 space-y-3 overflow-y-auto flex-1">
 				<!-- Date and Time -->
 				<div class="flex items-start gap-3">
 					<Icon name="calendar" size={16} class="mt-0.5 opacity-50" />
@@ -110,7 +117,7 @@
 				{#if event.description}
 					<div class="flex items-start gap-3">
 						<Icon name="fileText" size={16} class="mt-0.5 opacity-50" />
-						<div class="flex-1 text-sm opacity-90">{event.description}</div>
+						<div class="flex-1 text-sm opacity-90 whitespace-pre-wrap break-words">{event.description}</div>
 					</div>
 				{/if}
 				
@@ -148,7 +155,7 @@
 			</div>
 			
 			<!-- Quick Actions -->
-			<div class="border-t border-surface-300 dark:border-surface-700 px-4 py-3">
+			<div class="border-t border-surface-300 dark:border-surface-700 px-4 py-3 flex-shrink-0">
 				<div class="flex gap-2">
 					<button class="btn btn-sm preset-tonal-surface flex-1 text-xs hover:scale-105 transition-transform">
 						<Icon name="pencil" size={14} class="mr-1" />
@@ -211,5 +218,36 @@
 		backdrop-filter: blur(20px);
 		-webkit-backdrop-filter: blur(20px);
 		border: 1px solid rgba(255, 255, 255, 0.2);
+	}
+	
+	/* Custom scrollbar for popover content */
+	.overflow-y-auto {
+		scrollbar-width: thin;
+		scrollbar-color: var(--color-surface-400) transparent;
+	}
+	
+	.overflow-y-auto::-webkit-scrollbar {
+		width: 6px;
+	}
+	
+	.overflow-y-auto::-webkit-scrollbar-track {
+		background: transparent;
+	}
+	
+	.overflow-y-auto::-webkit-scrollbar-thumb {
+		background-color: var(--color-surface-400);
+		border-radius: 3px;
+	}
+	
+	.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+		background-color: var(--color-surface-500);
+	}
+	
+	/* Ensure line-clamp works */
+	.line-clamp-2 {
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
 	}
 </style>
