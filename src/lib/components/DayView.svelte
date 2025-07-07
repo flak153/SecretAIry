@@ -48,15 +48,29 @@
 			dayEvents.push({ ...e, type: 'chores' })
 		);
 		
-		// Add mock times (in real app, these would come from the events)
+		// Use actual times from events if available, otherwise create mock times
 		let currentTime = new Date(selectedDate);
 		currentTime.setHours(9, 0, 0, 0);
 		
-		return dayEvents.map(event => ({
-			...event,
-			startTime: new Date(currentTime),
-			endTime: new Date(currentTime.setHours(currentTime.getHours() + event.hours))
-		}));
+		return dayEvents.map(event => {
+			if (event.startTime && event.endTime) {
+				// Use actual times from Google Calendar
+				return {
+					...event,
+					startTime: new Date(event.startTime),
+					endTime: new Date(event.endTime)
+				};
+			} else {
+				// Fallback for mock events
+				const start = new Date(currentTime);
+				const end = new Date(currentTime.setHours(currentTime.getHours() + event.hours));
+				return {
+					...event,
+					startTime: start,
+					endTime: end
+				};
+			}
+		});
 	}
 	
 	// Get current time position

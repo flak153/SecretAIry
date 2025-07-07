@@ -107,7 +107,6 @@
 		</div>
 	</section>
 </div>
-</script>
 
 <style>
 	/* Page-specific styles if needed */

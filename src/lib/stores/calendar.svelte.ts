@@ -111,12 +111,22 @@ class CalendarStore {
 			work: work.map(e => ({
 				date: new Date(e.startTime),
 				hours: this.calculateHours(e),
-				title: e.title
+				title: e.title,
+				startTime: e.startTime,
+				endTime: e.endTime,
+				allDay: e.allDay,
+				location: e.location,
+				description: e.description
 			})),
 			personal: personal.map(e => ({
 				date: new Date(e.startTime),
 				hours: this.calculateHours(e),
-				title: e.title
+				title: e.title,
+				startTime: e.startTime,
+				endTime: e.endTime,
+				allDay: e.allDay,
+				location: e.location,
+				description: e.description
 			})),
 			chores: [] // We can add a chores category later
 		};

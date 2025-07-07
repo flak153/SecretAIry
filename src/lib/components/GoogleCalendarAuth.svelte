@@ -180,7 +180,8 @@
 				'showDeleted': false,
 				'singleEvents': true,
 				'maxResults': 100,
-				'orderBy': 'startTime'
+				'orderBy': 'startTime',
+				'timeZone': Intl.DateTimeFormat().resolvedOptions().timeZone // Use browser's timezone
 			});
 			
 			const items = response.result.items || [];

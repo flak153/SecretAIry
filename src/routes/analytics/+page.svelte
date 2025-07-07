@@ -283,7 +283,4 @@
 
 <style>
 	/* Custom animations for charts */
-	:global(.dark) circle {
-		fill: var(--color-surface-900);
-	}
 </style>

@@ -147,10 +147,6 @@
 				<!-- Actions -->
 				<div class="flex items-center gap-2">
 					<ModeSwitcher />
-					<button class="btn btn-sm preset-tonal-surface" onclick={() => showChatbox = !showChatbox}>
-						<Icon name="message" size={16} class="mr-2" />
-						AI Assistant
-					</button>
 				</div>
 			</div>
 		</div>
